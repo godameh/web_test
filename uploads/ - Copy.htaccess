@@ -1,0 +1,26 @@
+# Protect uploads directory - Prevent PHP execution and unauthorized access
+
+# Deny all access by default
+Order deny,allow
+Deny from all
+
+# Allow only specific file types
+<FilesMatch "\.(jpg|jpeg|png|gif|heic|pdf)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Prevent PHP execution
+<FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|cgi|sh|exe)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
+
+# Set security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+</IfModule>
